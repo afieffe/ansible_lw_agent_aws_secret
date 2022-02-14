@@ -1,4 +1,4 @@
-# terraform_agent_aws_secret
+# playbook ansible lacework agent
 Install Lacework Agent using a token stored in AWS Secret Manager under lacework/token
 
 Add permission to acess the secret manager:
