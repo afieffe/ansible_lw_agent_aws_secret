@@ -1,0 +1,42 @@
+
+---
+- hosts: all
+  become: true
+  vars:
+    lacework_accessToken: "{{ lookup('aws_ssm', 'lacework') }}"
+  tasks:
+    - name: get token
+      connection: local
+      set_fact:
+        lacework_accessToken: "{{ lookup('amazon.aws.aws_secret', 'lacework/token') }}"
+    - name: yum dependencies
+      yum:
+        name:
+          - pygpgme
+          - yum-utils
+        state: present
+
+    - name: install lacework yum repo
+      get_url:
+        url: "https://packages.lacework.net/RPMS/x86_64/lacework.repo"
+        dest: "/etc/yum.repos.d/lacework.repo"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: install Lacework agent
+      yum:
+        name:
+          - lacework
+        state: latest
+
+    - name: install /var/lib/lacework/config/config.json
+      template:
+        src: "lacework-config.json.j2"
+        dest: "/var/lib/lacework/config/config.json"
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: restart lacework
+      service: name=datacollector state=restarted
