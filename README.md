@@ -21,4 +21,4 @@ Add permission to acess the secret manager:
             "Resource": "*"
         }
         
-  
+  Update lacework-config.json.j2 with http proxy.
