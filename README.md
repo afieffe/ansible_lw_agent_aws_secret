@@ -1,5 +1,5 @@
 # terraform_agent_aws_secret
-Install Lacework Agent using a token stored in AWS Secret Manager
+Install Lacework Agent using a token stored in AWS Secret Manager under lacework/token
 
 Add permission to acess the secret manager:
 
@@ -12,7 +12,7 @@ Add permission to acess the secret manager:
                 "secretsmanager:ListSecretVersionIds"
             ],
             "Resource": [
-                "arn:aws:secretsmanager:eu-west-1:807828924102:secret:lacework/token-eZgPLc"
+                <Secret arn>
             ]
         },
         {
